@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will U Be My Valentine?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffe6f2;
+            color: #333;
+            position: relative;
+            overflow: hidden;
+        }
+        #main {
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        button {
+            font-size: 1.5em;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #yes {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #yes:hover {
+            background-color: #45a049;
+        }
+        #no {
+            background-color: #f44336;
+            color: white;
+            position: absolute;
+        }
+        #no:hover {
+            background-color: #da190b;
+        }
+        #thank-you {
+            display: none;
+            font-size: 2em;
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <h1>Will U Be My Valentine?</h1>
+        <button id="yes">YES</button>
+        <button id="no">NO</button>
+    </div>
+    <div id="thank-you">THANK YOU FOR CHOOSING THE RIGHT OPTION🥰😘</div>
+    <canvas id="confetti-canvas"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        const noButton = document.getElementById('no');
+        const yesButton = document.getElementById('yes');
+        const mainDiv = document.getElementById('main');
+        const thankYouDiv = document.getElementById('thank-you');
+
+        // Function to move NO button to a random position
+        function moveNoButton() {
+            const maxX = window.innerWidth - noButton.offsetWidth;
+            const maxY = window.innerHeight - noButton.offsetHeight;
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            noButton.style.left = randomX + 'px';
+            noButton.style.top = randomY + 'px';
+        }
+
+        // Move NO button on hover or click
+        noButton.addEventListener('mouseenter', moveNoButton);
+        noButton.addEventListener('click', moveNoButton);
+
+        // Handle YES button click
+        yesButton.addEventListener('click', () => {
+            // Trigger confetti
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+
+            // After a short delay, hide main content and show thank you
+            setTimeout(() => {
+                mainDiv.style.display = 'none';
+                thankYouDiv.style.display = 'block';
+            }, 1000); // 1 second delay for confetti effect
+        });
+    </script>
+</body>
+</html>
